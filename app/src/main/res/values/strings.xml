@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Yathartha Kannada TV</string>
+    <string name="app_label">Yathartha</string>
+
+    <string name="title_activity_link">LinkActivity</string>
+    <string name="address">YATHARTHA KANNADA T.V KOLAGALLU, Ballari Dist Karnataka State, INDIA.</string>
+    <string name="email">yatharthatv@gmail.com</string>
+    <string name="phone">9538461764</string>
+    <string name="web_view">Web view</string>
+    <string name="video_view">Video view</string>
+    <string name="email_text">email</string>
+    <string name="mobile_text">Mobile</string>
+    <string name="permission_available_contacts">Contacts Permissions have been granted. Contacts screen can now be opened.</string>
+    <string name="permissions_not_granted">Permissions were not granted.</string>
+</resources>

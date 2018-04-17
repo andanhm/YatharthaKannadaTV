@@ -1,0 +1,11 @@
+package com.amma.yatharthakannadatv;
+
+import android.graphics.Bitmap;
+import android.webkit.WebChromeClient;
+//Remove Android WebView gray play button
+public class WebChromeClientCustomPoster  extends WebChromeClient {
+    @Override
+    public Bitmap getDefaultVideoPoster() {
+        return Bitmap.createBitmap(10, 10, Bitmap.Config.ARGB_8888);
+    }
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ಯಥರ್ಥಾ ಕನ್ನಡ ಟಿ.ವಿ.</string>
+    <string name="app_label">ಯಥರ್ಥಾ</string>
+    <string name="address">ಯಥರ್ಥ ಕಣ್ಣಾಡ ಟಿ.ವಿ. ಕೊಲ್ಲಗಲ್ಲು, ಬಲ್ಲಾರಿ ಡಿಸ್ಟ್ರಿಕ್ಟ್ ಕರ್ನಾಟಕ ರಾಜ್ಯ, ಭಾರತ.</string>
+    <string name="email_text">email</string>
+    <string name="mobile_text">Mobile</string>
+</resources>
