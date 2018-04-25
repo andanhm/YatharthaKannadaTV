@@ -1,4 +1,4 @@
-package com.amma.yatharthakannadatv;
+package com.amma.yatharthakannadatv.utililes;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -9,8 +9,13 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-public class Utility {
-    public static boolean internetConnectionAvailable(int timeOut) {
+public class Internet {
+    /**
+     * Check internet connection is available
+     * @param timeOut Request time out in seconds
+     * @return Boolean value
+     */
+    public static boolean isConnectionAvailable(int timeOut) {
         InetAddress inetAddress = null;
         try {
             Future<InetAddress> future = Executors.newSingleThreadExecutor().submit(new Callable<InetAddress>() {
@@ -27,6 +32,6 @@ public class Utility {
             future.cancel(true);
         } catch (InterruptedException | TimeoutException | ExecutionException ignored) {
         }
-        return inetAddress!=null;
+        return inetAddress != null;
     }
 }

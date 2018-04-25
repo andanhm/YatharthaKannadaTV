@@ -1,11 +1,8 @@
-package com.amma.yatharthakannadatv;
+package com.amma.yatharthakannadatv.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +10,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.VideoView;
+
+import com.amma.yatharthakannadatv.R;
+import com.amma.yatharthakannadatv.web.ChromeClientCustomPoster;
 
 public class VideoActivity extends AppCompatActivity {
     @Override
@@ -48,7 +47,7 @@ public class VideoActivity extends AppCompatActivity {
             }
         });
         webView.loadUrl("https://app.viloud.tv/player/embed/channel/fe81329ea8ebce7118f7f619823845a3?autoplay=1&volume=1&controls=0&title=0&share=0&random=0");
-        webView.setWebChromeClient(new WebChromeClientCustomPoster());
+        webView.setWebChromeClient(new ChromeClientCustomPoster());
         webView.setVisibility(View.VISIBLE);
     }
     @Override

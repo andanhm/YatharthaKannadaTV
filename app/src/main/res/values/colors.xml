@@ -12,4 +12,8 @@
     <color name="colorHeader">#85655D</color>
     <color name="splash">#FEF4D0</color>
 
+    <!--Dialog warning app not found-->
+    <color name="warning_color">#E3757E</color>
+    <color name="warning_color_text">#66697A</color>
+
 </resources>

@@ -12,4 +12,19 @@
     <string name="mobile_text">Mobile</string>
     <string name="permission_available_contacts">Contacts Permissions have been granted. Contacts screen can now be opened.</string>
     <string name="permissions_not_granted">Permissions were not granted.</string>
+
+    <!--Android runtime permission M & above -->
+    <string name="alert_permission">Permission Required</string>
+    <string name="alert_permission_call">App requires <b>Call</b> permission \n enabled to continue. \n\n<i>app settings</i> &#62; <i>permissions</i> &#62; <b><i>call</i></b></string>
+    <string name="alert_permission_open_setting">Open App Settings</string>
+
+    <!--Share-->
+    <string name="working_on_it">Working on it</string>
+    <string name="no_app_found_title">Oops!</string>
+    <string name="no_app_found">No app found on your phone which can perform this action.</string>
+    <string name="chooser_sharing_intent">Share app using…</string>
+    <string name="chooser_email_intent">Send email using…</string>
+    <string name="share">Share</string>
+    <string name="report_bug">Report Bug</string>
+    <string name="rate_us">Rate Us</string>
 </resources>

@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/app_background"
     android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="?android:attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     <!-- row 2 -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,17 +29,42 @@
             tools:ignore="UselessParent">
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="@dimen/_120"
+                android:layout_height="@dimen/_120"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/_10"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/header" />
-            <WebView
-                android:id="@+id/webView"
+
+            <LinearLayout
+                android:id="@+id/loadingPanel"
                 android:layout_width="match_parent"
-                android:layout_height="280dp"
-                android:visibility="invisible" />
+                android:layout_height="@dimen/_300"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/webViewLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_300"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <WebView
+                    android:id="@+id/webView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent" />
+
+
+            </LinearLayout>
             <!-- col 1 -->
         </LinearLayout>
 
@@ -44,9 +78,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="@dimen/_10"
+            android:layout_marginRight="@dimen/_10"
+            android:layout_marginTop="@dimen/_20"
             android:fontFamily="monospace"
             android:text="@string/address"
             android:textAlignment="center"
@@ -56,16 +90,17 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/_10"
+        android:layout_marginLeft="@dimen/_10"
+        android:layout_marginRight="@dimen/_10"
+        android:baselineAligned="false"
+        android:gravity="bottom"
         android:orientation="horizontal"
-        android:weightSum="2"
-        android:baselineAligned="false">
+        android:weightSum="2">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -90,7 +125,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="@dimen/_04"
                     android:layout_weight="3"
                     android:text="@string/phone"
                     android:textSize="14sp"
