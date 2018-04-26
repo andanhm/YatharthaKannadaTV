@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/app_background"
     android:orientation="vertical">
 
@@ -29,6 +29,7 @@
             tools:ignore="UselessParent">
 
             <ImageView
+                android:id="@+id/imageHeaderIcon"
                 android:layout_width="@dimen/_120"
                 android:layout_height="@dimen/_120"
                 android:layout_gravity="center"
@@ -72,6 +73,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/footerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -90,6 +92,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/addressLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

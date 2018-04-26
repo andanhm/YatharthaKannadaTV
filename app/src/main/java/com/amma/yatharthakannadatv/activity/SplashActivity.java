@@ -22,21 +22,7 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(3328);
         setContentView(R.layout.activity_splash);
         mActivity = SplashActivity.this;
-        boolean isInternetAvailable = Internet.isConnectionAvailable(3000);
-        if (isInternetAvailable) {
-            next();
-        } else {
-            Snackbar.make(SplashActivity.this.findViewById(android.R.id.content), "Check internet connection", Snackbar.LENGTH_LONG).show();
-            Snackbar.make(mActivity.findViewById(android.R.id.content), "Check internet connection", Snackbar.LENGTH_LONG)
-                    .setAction("Retry", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            next();
-                        }
-                    })
-                    .show();
-        }
-
+        next();
     }
 
     @Override
@@ -50,16 +36,28 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void next() {
+        boolean isInternetAvailable = Internet.isConnectionAvailable(5000);
+        if (isInternetAvailable) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+                    SplashActivity.this.startActivity(mainIntent);
+                    SplashActivity.this.finish();
+                }
+            }, 2000);
+        } else {
+            Snackbar.make(mActivity.findViewById(android.R.id.content), "Check internet connection", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Retry", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            next();
+                        }
+                    })
+                    .show();
+        }
 
         /* New Handler to start the Menu-Activity and close this Splash-Screen after some seconds.*/
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
-                SplashActivity.this.startActivity(mainIntent);
-                SplashActivity.this.finish();
-            }
-        }, 2000);
 
     }
 }
