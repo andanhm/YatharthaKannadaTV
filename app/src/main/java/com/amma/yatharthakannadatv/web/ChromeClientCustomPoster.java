@@ -7,6 +7,6 @@ import android.webkit.WebChromeClient;
 public class ChromeClientCustomPoster extends WebChromeClient {
     @Override
     public Bitmap getDefaultVideoPoster() {
-        return Bitmap.createBitmap(10, 10, Bitmap.Config.ARGB_8888);
+        return Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
     }
 }

@@ -10,6 +10,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
@@ -18,11 +19,14 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
@@ -42,16 +46,17 @@ import com.amma.yatharthakannadatv.analytics.TrackingApp;
 import com.crashlytics.android.Crashlytics;
 
 public class MainActivity extends AppCompatActivity {
-    Activity mActivity;
-    WebView mWebView;
-    LinearLayout mLoadingPanel, mWebViewLayout,mFooterLayout,mHeaderLayout,mMainLayout;
-    private LinearLayout.LayoutParams paramsNotFullscreen;
+    private static final int REQUEST_ACCESS = 101;
     private static String[] PERMISSIONS = {Manifest.permission.CALL_PHONE,
             Manifest.permission.CALL_PRIVILEGED};
-    private static final int REQUEST_ACCESS = 101;
+    Activity mActivity;
+    WebView mWebView;
+    LinearLayout mLoadingPanel, mWebViewLayout, mFooterLayout, mHeaderLayout, mMainLayout;
     Toolbar mTopToolbar;
     ImageView mHeaderImage;
     View mDecorView;
+    private LinearLayout.LayoutParams paramsNotFullscreen;
+
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +68,16 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mTopToolbar);
         mTopToolbar.setTitle(R.string.app_name);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            mTopToolbar.setTitleTextColor(getResources().getColor(android.R.color.white,null));
-        }else {
+            mTopToolbar.setTitleTextColor(getResources().getColor(android.R.color.white, null));
+        } else {
             mTopToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         }
-        mMainLayout =findViewById(R.id.mainLayout);
+        mMainLayout = findViewById(R.id.mainLayout);
         mWebView = findViewById(R.id.webView);
         mWebViewLayout = findViewById(R.id.webViewLayout);
+        mWebViewLayout.setVisibility(View.GONE);
         mLoadingPanel = findViewById(R.id.loadingPanel);
+        mLoadingPanel.setVisibility(View.VISIBLE);
         mHeaderLayout = findViewById(R.id.headerLayout);
         mHeaderImage = findViewById(R.id.imageHeaderIcon);
         mFooterLayout = findViewById(R.id.footerLayout);
@@ -89,10 +96,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         playVideoViaWebView();
-                boolean isInternetAvailable = Internet.isConnectionAvailable(5000);
+        boolean isInternetAvailable = Internet.isConnectionAvailable(5000);
         if (!isInternetAvailable) {
-            Snackbar.make(mActivity.findViewById(android.R.id.content), "Check internet connection", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Retry", new View.OnClickListener() {
+            Snackbar.make(mActivity.findViewById(android.R.id.content), getResources().getString(R.string.check_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction(getResources().getString(R.string.retry), new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             mActivity.recreate();
@@ -118,6 +125,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mWebView.loadUrl("javascript:(function() { document.getElementsByTagName('video')[0].play(); })()");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mWebView.loadUrl("javascript:(function() { document.getElementsByTagName('video')[0].stop(); })()");
+    }
+
     private void email() {
         Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
         emailIntent.setType("plain/text");
@@ -126,11 +145,11 @@ public class MainActivity extends AppCompatActivity {
         emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
                 getResources().getString(R.string.app_name));
         startActivity(Intent.createChooser(
-                emailIntent, "Send mail..."));
+                emailIntent, getResources().getString(R.string.chooser_email_intent)));
         TrackingApp.email();
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint({"SetJavaScriptEnabled", "ClickableViewAccessibility"})
     private void playVideoViaWebView() {
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
@@ -138,7 +157,10 @@ public class MainActivity extends AppCompatActivity {
         mWebView.getSettings().setSupportZoom(true);
         mWebView.getSettings().setBuiltInZoomControls(false);
         mWebView.getSettings().setAllowFileAccess(true);
+        mWebView.getSettings().setAppCacheEnabled(true);
         mWebView.getSettings().setMediaPlaybackRequiresUserGesture(true);
+        mWebView.loadUrl("https://app.viloud.tv/player/embed/channel/fe81329ea8ebce7118f7f619823845a3?autoplay=1&volume=1&controls=0&title=0&share=0&random=0");
+        mWebView.setWebChromeClient(new ChromeClientCustomPoster());
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageCommitVisible(WebView view, String url) {
@@ -155,16 +177,20 @@ public class MainActivity extends AppCompatActivity {
                 setProgressBarIndeterminateVisibility(true);
                 super.onPageFinished(view, url);
                 view.loadUrl("javascript:(function() { document.getElementsByTagName('video')[0].play(); })()");
-                mWebViewLayout.setVisibility(View.VISIBLE);
-                mLoadingPanel.setVisibility(View.GONE);
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        mWebViewLayout.setVisibility(View.VISIBLE);
+                        mLoadingPanel.setVisibility(View.GONE);
+                    }
+                }, 2000);
             }
 
             @TargetApi(Build.VERSION_CODES.M)
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
-                mWebView.setVisibility(View.INVISIBLE);
-
+                mWebView.setVisibility(View.GONE);
+                mLoadingPanel.setVisibility(View.VISIBLE);
                 Snackbar.make(mActivity.findViewById(android.R.id.content), error.getDescription().toString(), Snackbar.LENGTH_INDEFINITE)
                         .setAction(getResources().getString(R.string.retry), new View.OnClickListener() {
                             @Override
@@ -174,13 +200,13 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .show();
                 Crashlytics.log(error.getDescription().toString());
-
             }
 
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 super.onReceivedError(view, errorCode, description, failingUrl);
-                mWebView.setVisibility(View.INVISIBLE);
+                mWebView.setVisibility(View.GONE);
+                mLoadingPanel.setVisibility(View.VISIBLE);
                 Snackbar.make(mActivity.findViewById(android.R.id.content), description, Snackbar.LENGTH_INDEFINITE)
                         .setAction(getResources().getString(R.string.retry), new View.OnClickListener() {
                             @Override
@@ -192,8 +218,22 @@ public class MainActivity extends AppCompatActivity {
                 Crashlytics.log(description);
             }
         });
+        mWebView.setInitialScale(100);
+        mWebView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    return false;
+                }
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+                    mDecorView.setSystemUiVisibility(uiOptions);
+                }
+                return false;
+            }
+        });
         mWebView.loadUrl("https://app.viloud.tv/player/embed/channel/fe81329ea8ebce7118f7f619823845a3?autoplay=1&volume=1&controls=0&title=0&share=0&random=0");
-        mWebView.setWebChromeClient(new ChromeClientCustomPoster());
     }
 
     @Override
@@ -274,32 +314,32 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void fullScreen(){
+    public void fullScreen() {
         // Hide Status Bar.
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         mDecorView.setSystemUiVisibility(uiOptions);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-        paramsNotFullscreen=(LinearLayout.LayoutParams)mWebView.getLayoutParams();
+        paramsNotFullscreen = (LinearLayout.LayoutParams) mWebViewLayout.getLayoutParams();
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(paramsNotFullscreen);
         params.setMargins(0, 0, 0, 0);
         params.height = LinearLayout.LayoutParams.MATCH_PARENT;
         params.width = LinearLayout.LayoutParams.MATCH_PARENT;
-        mWebView.setLayoutParams(params);
-        mMainLayout.setBackgroundColor(getResources().getColor(android.R.color.black));
+        mWebViewLayout.setLayoutParams(params);
+//        mMainLayout.setBackgroundColor(getResources().getColor(android.R.color.black));
         mTopToolbar.setVisibility(View.GONE);
         mHeaderImage.setVisibility(View.GONE);
         mFooterLayout.setVisibility(View.GONE);
     }
 
-    public  void  exitFullScreen(){
+    public void exitFullScreen() {
         // Show Status Bar.
         int uiOptions = View.SYSTEM_UI_FLAG_VISIBLE;
         mDecorView.setSystemUiVisibility(uiOptions);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        mWebView.setLayoutParams(paramsNotFullscreen);
-        mMainLayout.setBackground(getResources().getDrawable(R.drawable.app_background));
+        mWebViewLayout.setLayoutParams(paramsNotFullscreen);
+//        mMainLayout.setBackground(getResources().getDrawable(R.drawable.app_background));
         mTopToolbar.setVisibility(View.VISIBLE);
         mHeaderImage.setVisibility(View.VISIBLE);
         mFooterLayout.setVisibility(View.VISIBLE);
