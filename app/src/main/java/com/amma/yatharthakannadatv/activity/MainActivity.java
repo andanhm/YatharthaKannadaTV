@@ -43,14 +43,13 @@ import com.amma.yatharthakannadatv.analytics.TrackingApp;
 public class MainActivity extends AppCompatActivity {
     Activity mActivity;
     WebView mWebView;
-    LinearLayout mLoadingPanel, mWebViewLayout,mAddressLayout;
+    LinearLayout mLoadingPanel, mWebViewLayout,mFooterLayout,mHeaderLayout;
     private LinearLayout.LayoutParams paramsNotFullscreen;
     private static String[] PERMISSIONS = {Manifest.permission.CALL_PHONE,
             Manifest.permission.CALL_PRIVILEGED};
     private static final int REQUEST_ACCESS = 101;
     Toolbar mTopToolbar;
     ImageView mHeaderImage;
-    RelativeLayout mFooterLayout;
     View mDecorView;
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -59,15 +58,20 @@ public class MainActivity extends AppCompatActivity {
         mDecorView = getWindow().getDecorView();
         setContentView(R.layout.activity_main);
         mActivity = MainActivity.this;
-        mTopToolbar = findViewById(R.id.my_toolbar);
+        mTopToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mTopToolbar);
         mTopToolbar.setTitle(R.string.app_name);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mTopToolbar.setTitleTextColor(getResources().getColor(android.R.color.white,null));
+        }else {
+            mTopToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        }
         mWebView = findViewById(R.id.webView);
         mWebViewLayout = findViewById(R.id.webViewLayout);
         mLoadingPanel = findViewById(R.id.loadingPanel);
+        mHeaderLayout = findViewById(R.id.headerLayout);
         mHeaderImage = findViewById(R.id.imageHeaderIcon);
         mFooterLayout = findViewById(R.id.footerLayout);
-        mAddressLayout =findViewById(R.id.addressLayout);
         LinearLayout buttonEmail = findViewById(R.id.buttonEmail);
         buttonEmail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,9 +196,6 @@ public class MainActivity extends AppCompatActivity {
                             .show();
                 }
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request.
         }
     }
 
@@ -250,19 +251,13 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    private void statusBar(boolean value) {
-        if (!value) {
-            getWindow().setFlags(AccessibilityNodeInfoCompat.ACTION_NEXT_HTML_ELEMENT, AccessibilityNodeInfoCompat.ACTION_NEXT_HTML_ELEMENT);
-            getWindow().getDecorView().setSystemUiVisibility(3328);
-        }
-        getWindow().setFlags(0, 0);
-        getWindow().getDecorView().setSystemUiVisibility(0);
-    }
 
     public void fullScreen(){
         // Hide Status Bar.
-        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         mDecorView.setSystemUiVisibility(uiOptions);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         paramsNotFullscreen=(LinearLayout.LayoutParams)mWebView.getLayoutParams();
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(paramsNotFullscreen);
         params.setMargins(0, 0, 0, 0);
@@ -272,19 +267,17 @@ public class MainActivity extends AppCompatActivity {
         mTopToolbar.setVisibility(View.GONE);
         mHeaderImage.setVisibility(View.GONE);
         mFooterLayout.setVisibility(View.GONE);
-        mAddressLayout.setVisibility(View.GONE);
     }
 
     public  void  exitFullScreen(){
         // Show Status Bar.
         int uiOptions = View.SYSTEM_UI_FLAG_VISIBLE;
         mDecorView.setSystemUiVisibility(uiOptions);
-        getWindow().setFlags(0, 0);
-        getWindow().getDecorView().setSystemUiVisibility(0);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mWebView.setLayoutParams(paramsNotFullscreen);
         mTopToolbar.setVisibility(View.VISIBLE);
         mHeaderImage.setVisibility(View.VISIBLE);
         mFooterLayout.setVisibility(View.VISIBLE);
-        mAddressLayout.setVisibility(View.VISIBLE);
     }
 }
