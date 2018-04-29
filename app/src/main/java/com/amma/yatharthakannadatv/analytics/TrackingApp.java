@@ -5,7 +5,6 @@ import com.crashlytics.android.answers.ContentViewEvent;
 
 public class TrackingApp {
 
-    private static final String TAG = TrackingApp.class.getSimpleName();
     //We can config in your app to show only for your particular project
     public static void call() {
         Answers.getInstance().logContentView(new ContentViewEvent()
@@ -17,6 +16,18 @@ public class TrackingApp {
         Answers.getInstance().logContentView(new ContentViewEvent()
                 .putContentName("Email")
                 .putContentType("Button"));
+
+    }
+    public static void share() {
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Share")
+                .putContentType("Menu"));
+
+    }
+    public static void rate() {
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Rate")
+                .putContentType("Menu"));
 
     }
 }

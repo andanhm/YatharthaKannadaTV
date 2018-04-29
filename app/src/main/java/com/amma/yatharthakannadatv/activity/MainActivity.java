@@ -260,12 +260,14 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.share:
                 share.share();
+                TrackingApp.share();
                 return true;
             case R.id.reportABug:
                 share.reportBug();
                 return true;
             case R.id.rateUs:
                 share.rateUs();
+                TrackingApp.rate();
                 return true;
         }
 

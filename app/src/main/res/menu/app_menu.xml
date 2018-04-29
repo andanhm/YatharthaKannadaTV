@@ -16,9 +16,9 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/rateUs"
-        android:icon="@drawable/ic_rate_review_black_48dp"
+        android:icon="@drawable/ic_rate_review_white_48dp"
         android:orderInCategory="100"
-        android:visible="false"
+        android:visible="true"
         android:title="@string/rate_us"
         app:showAsAction="ifRoom" />
 </menu>
