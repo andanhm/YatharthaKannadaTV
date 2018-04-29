@@ -27,4 +27,6 @@
     <string name="share">Share</string>
     <string name="report_bug">Report Bug</string>
     <string name="rate_us">Rate Us</string>
+    <string name="check_internet">Check internet connection</string>
+    <string name="retry">Retry</string>
 </resources>

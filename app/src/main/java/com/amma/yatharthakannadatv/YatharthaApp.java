@@ -31,7 +31,6 @@ public class YatharthaApp extends Application {
 
     public static YatharthaApp getInstance() {
         return mYatharthaApp;
-
     }
 
 }

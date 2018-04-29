@@ -39,11 +39,12 @@ import com.amma.yatharthakannadatv.utililes.Share;
 import com.amma.yatharthakannadatv.utililes.Ui;
 import com.amma.yatharthakannadatv.web.ChromeClientCustomPoster;
 import com.amma.yatharthakannadatv.analytics.TrackingApp;
+import com.crashlytics.android.Crashlytics;
 
 public class MainActivity extends AppCompatActivity {
     Activity mActivity;
     WebView mWebView;
-    LinearLayout mLoadingPanel, mWebViewLayout,mFooterLayout,mHeaderLayout;
+    LinearLayout mLoadingPanel, mWebViewLayout,mFooterLayout,mHeaderLayout,mMainLayout;
     private LinearLayout.LayoutParams paramsNotFullscreen;
     private static String[] PERMISSIONS = {Manifest.permission.CALL_PHONE,
             Manifest.permission.CALL_PRIVILEGED};
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         }else {
             mTopToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         }
+        mMainLayout =findViewById(R.id.mainLayout);
         mWebView = findViewById(R.id.webView);
         mWebViewLayout = findViewById(R.id.webViewLayout);
         mLoadingPanel = findViewById(R.id.loadingPanel);
@@ -162,14 +164,32 @@ public class MainActivity extends AppCompatActivity {
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
                 mWebView.setVisibility(View.INVISIBLE);
-                Snackbar.make(mActivity.findViewById(android.R.id.content), error.getDescription(), Snackbar.LENGTH_LONG).show();
+
+                Snackbar.make(mActivity.findViewById(android.R.id.content), error.getDescription().toString(), Snackbar.LENGTH_INDEFINITE)
+                        .setAction(getResources().getString(R.string.retry), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mActivity.recreate();
+                            }
+                        })
+                        .show();
+                Crashlytics.log(error.getDescription().toString());
+
             }
 
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 super.onReceivedError(view, errorCode, description, failingUrl);
                 mWebView.setVisibility(View.INVISIBLE);
-                Snackbar.make(mActivity.findViewById(android.R.id.content), description, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(mActivity.findViewById(android.R.id.content), description, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(getResources().getString(R.string.retry), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mActivity.recreate();
+                            }
+                        })
+                        .show();
+                Crashlytics.log(description);
             }
         });
         mWebView.loadUrl("https://app.viloud.tv/player/embed/channel/fe81329ea8ebce7118f7f619823845a3?autoplay=1&volume=1&controls=0&title=0&share=0&random=0");
@@ -264,6 +284,7 @@ public class MainActivity extends AppCompatActivity {
         params.height = LinearLayout.LayoutParams.MATCH_PARENT;
         params.width = LinearLayout.LayoutParams.MATCH_PARENT;
         mWebView.setLayoutParams(params);
+        mMainLayout.setBackgroundColor(getResources().getColor(android.R.color.black));
         mTopToolbar.setVisibility(View.GONE);
         mHeaderImage.setVisibility(View.GONE);
         mFooterLayout.setVisibility(View.GONE);
@@ -276,6 +297,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mWebView.setLayoutParams(paramsNotFullscreen);
+        mMainLayout.setBackground(getResources().getDrawable(R.drawable.app_background));
         mTopToolbar.setVisibility(View.VISIBLE);
         mHeaderImage.setVisibility(View.VISIBLE);
         mFooterLayout.setVisibility(View.VISIBLE);

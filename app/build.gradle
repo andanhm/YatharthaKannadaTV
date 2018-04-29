@@ -34,9 +34,6 @@ android {
         debug {
             ext.enableCrashlytics = false
         }
-        release {
-            ext.enableCrashlytics = true
-        }
     }
     lintOptions {
         disable 'MissingTranslation'
@@ -59,20 +56,37 @@ android {
         exclude 'META-INF/LICENSE-FIREBASE.txt'
         exclude 'META-INF/NOTICE'
     }
+    /**
+     * The splits block is where you can configure different APK builds that
+     * each contain only code and resources for a supported screen density or
+     * ABI. You'll also need to configure your build so that each APK has a
+     * different versionCode.
+     */
+    splits {
+        // Settings to build multiple APKs based on screen density.
+        density {
+
+            // Enable or disable building multiple APKs.
+            enable false
+
+            // Exclude these densities when building multiple APKs.
+            exclude "ldpi", "tvdpi", "xxxhdpi", "400dpi", "560dpi"
+        }
+    }
 }
 
 /*
 * Don't use 23.+ - always use complete version number eg: 23.4.0
 * */
 ext {
-    supportLibraryVersion = '27.1.1'
+    compileSdkVersion  = '27.1.1'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
-    implementation "com.android.support:support-v4:$supportLibraryVersion"
-    implementation "com.android.support:design:$supportLibraryVersion"
+    implementation "com.android.support:appcompat-v7:$compileSdkVersion"
+    implementation "com.android.support:support-v4:$compileSdkVersion"
+    implementation "com.android.support:design:$compileSdkVersion"
     implementation ("com.crashlytics.sdk.android:crashlytics:2.9.1@aar") {
         transitive = true
     }
