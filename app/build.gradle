@@ -47,7 +47,7 @@ android {
     // added during execution.
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "${variant.name}-${variant.versionName}.apk"
+            outputFileName = "yatharthakannadatv.${variant.name}-${variant.versionName}.apk"
         }
     }
 

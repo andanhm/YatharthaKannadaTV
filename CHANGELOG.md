@@ -5,7 +5,7 @@
 * Full screen video play support
 * Application tracking with fabric.io
 * Features
-  * Call / Email santosh guruji for your quires.
+  * Call / Email Santosh Guruji for your quires.
   * Application Sharing
 * Bug fixes, including:
   * Hide android hardware button on fullscreen
