@@ -159,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
         mWebView.getSettings().setAllowFileAccess(true);
         mWebView.getSettings().setAppCacheEnabled(true);
         mWebView.getSettings().setMediaPlaybackRequiresUserGesture(true);
-        mWebView.loadUrl("https://app.viloud.tv/player/embed/channel/fe81329ea8ebce7118f7f619823845a3?autoplay=1&volume=1&controls=0&title=0&share=0&random=0");
         mWebView.setWebChromeClient(new ChromeClientCustomPoster());
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -233,7 +232,8 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        mWebView.loadUrl("https://app.viloud.tv/player/embed/channel/fe81329ea8ebce7118f7f619823845a3?autoplay=1&volume=1&controls=0&title=0&share=0&random=0");
+        mWebView.loadUrl("https://app.viloud.tv/player/embed/channel/8e9b2b2234b5d86e62ac20c2eec5e6cf?autoplay=1&volume=1&controls=0&title=0&share=0&random=0");
+//        mWebView.loadUrl("file:///android_asset/index.html");   // now it will not fail here
     }
 
     @Override
