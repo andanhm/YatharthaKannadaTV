@@ -19,11 +19,9 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.amma.yatharthakannadatv"
-        minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 1001
-        versionName "1.0.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        minSdkVersion 17
+        versionCode 1004
+        versionName "1.0.3"
     }
     buildTypes {
         release {
@@ -93,5 +91,5 @@ dependencies {
     implementation('com.crashlytics.sdk.android:answers:1.4.1@aar') {
         transitive = true
     }
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 }

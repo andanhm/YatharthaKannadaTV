@@ -14,7 +14,17 @@
         android:background="?android:attr/colorPrimary"
         android:elevation="@dimen/_04"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        tools:ignore="NewApi">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:gravity="center"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"/>
+    </android.support.v7.widget.Toolbar>
     <!-- row 2 -->
     <LinearLayout
         android:id="@+id/headerLayout"
@@ -26,7 +36,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
             tools:ignore="UselessParent">
@@ -35,7 +45,8 @@
                 android:id="@+id/imageHeaderIcon"
                 android:layout_width="@dimen/_120"
                 android:layout_height="@dimen/_120"
-                android:layout_margin="@dimen/_10"
+                android:layout_marginTop="@dimen/_10"
+                android:layout_marginBottom="@dimen/_10"
                 android:layout_gravity="center"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/header" />
@@ -57,7 +68,7 @@
             <LinearLayout
                 android:id="@+id/webViewLayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_300"
+                android:layout_height="@dimen/_200"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -71,41 +82,41 @@
             <LinearLayout
                 android:id="@+id/footerLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="vertical"
                 tools:ignore="UselessParent">
                 <TextView
+                    android:layout_marginTop="@dimen/_10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10"
-                    android:layout_marginRight="@dimen/_10"
-                    android:layout_marginTop="@dimen/_20"
-                    android:fontFamily="monospace"
-                    android:text="@string/address"
+                    android:text="Yathartha TV"
                     android:textAlignment="center"
                     android:textColor="@color/colorHeader"
                     android:textSize="15sp"
                     android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/address"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorHeader"
+                    android:textSize="15sp"/>
 
                 <LinearLayout
                     android:id="@+id/addressLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/_10"
-                    android:layout_marginLeft="@dimen/_10"
-                    android:layout_marginRight="@dimen/_10"
                     android:baselineAligned="false"
                     android:gravity="bottom"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:layout_margin="@dimen/_10"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.8">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
                         <LinearLayout
                             android:id="@+id/buttonPhone"
@@ -120,7 +131,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:contentDescription="@string/mobile_text"
-                                android:src="@drawable/phone" />
+                                android:src="@drawable/mobile" />
 
                             <TextView
                                 android:layout_width="0dp"
@@ -129,7 +140,7 @@
                                 android:layout_marginStart="@dimen/_04"
                                 android:layout_weight="3"
                                 android:text="@string/phone"
-                                android:textSize="14sp"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                         </LinearLayout>
@@ -137,17 +148,15 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.2">
-
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
                         <LinearLayout
                             android:id="@+id/buttonEmail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:weightSum="5"
+                            android:weightSum="4"
                             tools:ignore="UselessParent">
 
                             <ImageView
@@ -155,15 +164,16 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:contentDescription="@string/mobile_text"
-                                android:src="@drawable/email" />
+                                android:src="@drawable/mail" />
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_weight="4"
+                                android:layout_marginStart="@dimen/_04"
+                                android:layout_weight="3"
                                 android:text="@string/email"
-                                android:textSize="14sp"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                         </LinearLayout>

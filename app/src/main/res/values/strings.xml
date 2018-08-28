@@ -2,8 +2,7 @@
     <string name="app_name">Yathartha Kannada TV</string>
     <string name="app_label">Yathartha</string>
 
-    <string name="title_activity_link">LinkActivity</string>
-    <string name="address">YATHARTHA KANNADA T.V KOLAGALLU, Ballari Dist Karnataka State, INDIA.</string>
+    <string name="address">Siddiveerappa Badavane, 7th cross BIET road, DAVANGERE – 577004, Karnataka State, INDIA.</string>
     <string name="email">yatharthatv@gmail.com</string>
     <string name="phone">9538461764</string>
     <string name="web_view">Web view</string>

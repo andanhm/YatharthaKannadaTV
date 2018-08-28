@@ -13,7 +13,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,26 +20,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
-import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import android.support.design.widget.Snackbar;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-
 import com.amma.yatharthakannadatv.R;
 import com.amma.yatharthakannadatv.utililes.Internet;
 import com.amma.yatharthakannadatv.utililes.Share;
-import com.amma.yatharthakannadatv.utililes.Ui;
 import com.amma.yatharthakannadatv.web.ChromeClientCustomPoster;
 import com.amma.yatharthakannadatv.analytics.TrackingApp;
 import com.crashlytics.android.Crashlytics;
@@ -66,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         mActivity = MainActivity.this;
         mTopToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mTopToolbar);
-        mTopToolbar.setTitle(R.string.app_name);
+//        mTopToolbar.setTitle(R.string.app_name);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mTopToolbar.setTitleTextColor(getResources().getColor(android.R.color.white, null));
         } else {
@@ -158,7 +148,9 @@ public class MainActivity extends AppCompatActivity {
         mWebView.getSettings().setBuiltInZoomControls(false);
         mWebView.getSettings().setAllowFileAccess(true);
         mWebView.getSettings().setAppCacheEnabled(true);
-        mWebView.getSettings().setMediaPlaybackRequiresUserGesture(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            mWebView.getSettings().setMediaPlaybackRequiresUserGesture(true);
+        }
         mWebView.setWebChromeClient(new ChromeClientCustomPoster());
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -321,10 +313,16 @@ public class MainActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         paramsNotFullscreen = (LinearLayout.LayoutParams) mWebViewLayout.getLayoutParams();
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(paramsNotFullscreen);
-        params.setMargins(0, 0, 0, 0);
-        params.height = LinearLayout.LayoutParams.MATCH_PARENT;
-        params.width = LinearLayout.LayoutParams.MATCH_PARENT;
+        LinearLayout.LayoutParams params = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            params = new LinearLayout.LayoutParams(paramsNotFullscreen);
+        }
+        if (params != null) {
+            params.setMargins(0, 0, 0, 0);
+            params.height = LinearLayout.LayoutParams.MATCH_PARENT;
+            params.width = LinearLayout.LayoutParams.MATCH_PARENT;
+        }
+
         mWebViewLayout.setLayoutParams(params);
 //        mMainLayout.setBackgroundColor(getResources().getColor(android.R.color.black));
         mTopToolbar.setVisibility(View.GONE);
