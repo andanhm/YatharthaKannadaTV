@@ -20,9 +20,9 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(AccessibilityNodeInfoCompat.ACTION_NEXT_HTML_ELEMENT, AccessibilityNodeInfoCompat.ACTION_NEXT_HTML_ELEMENT);
         getWindow().getDecorView().setSystemUiVisibility(3328);
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.activity_sample);
         mActivity = SplashActivity.this;
-        next();
+//        next();
     }
 
     @Override
