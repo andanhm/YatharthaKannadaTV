@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="?android:attr/colorPrimary"
+        android:elevation="@dimen/_04"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:gravity="center"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"/>
+    </android.support.v7.widget.Toolbar>
+    <LinearLayout
+        android:background="@drawable/background"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/loadingPanel"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="@dimen/_200">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/webViewLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <WebView
+                android:id="@+id/webView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
