@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "17829916425",
+    "firebase_url": "https://yatharthakannadatv.firebaseio.com",
+    "project_id": "yatharthakannadatv",
+    "storage_bucket": "yatharthakannadatv.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17829916425:android:f2a5b711e12ce5a5",
+        "android_client_info": {
+          "package_name": "com.amma.yatharthakannadatv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17829916425-285opm0ecm1bm0f62ke7at76b4l7d1a9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amma.yatharthakannadatv",
+            "certificate_hash": "394cd87debd33735f7a2d8b43313e2714d8e129f"
+          }
+        },
+        {
+          "client_id": "17829916425-nfeh10rdso044fb70h36i70u2jvjt0rt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5gv-psPjuF6J9RVAdbmQrbhwe0yLvl78"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17829916425-nfeh10rdso044fb70h36i70u2jvjt0rt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

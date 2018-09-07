@@ -13,7 +13,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,29 +20,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
-import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import android.support.design.widget.Snackbar;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-
 import com.amma.yatharthakannadatv.R;
 import com.amma.yatharthakannadatv.utililes.Internet;
 import com.amma.yatharthakannadatv.utililes.Share;
-import com.amma.yatharthakannadatv.utililes.Ui;
 import com.amma.yatharthakannadatv.web.ChromeClientCustomPoster;
 import com.amma.yatharthakannadatv.analytics.TrackingApp;
-import com.crashlytics.android.Crashlytics;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_ACCESS = 101;
@@ -198,7 +187,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                         })
                         .show();
-                Crashlytics.log(error.getDescription().toString());
             }
 
             @Override
@@ -214,7 +202,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                         })
                         .show();
-                Crashlytics.log(description);
             }
         });
         mWebView.setInitialScale(100);

@@ -26,7 +26,6 @@ import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.amma.yatharthakannadatv.R;
@@ -52,6 +51,8 @@ public class MainFullActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDecorView = getWindow().getDecorView();
+
+//        Crashlytics.getInstance().crash();
         setContentView(R.layout.activity_main_full);
         mActivity = MainFullActivity.this;
         mTopToolbar = findViewById(R.id.toolbar);
