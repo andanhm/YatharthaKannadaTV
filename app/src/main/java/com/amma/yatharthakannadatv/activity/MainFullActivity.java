@@ -36,6 +36,7 @@ import com.amma.yatharthakannadatv.web.ChromeClientCustomPoster;
 import com.crashlytics.android.Crashlytics;
 
 public class MainFullActivity extends AppCompatActivity {
+    String url = "http://app.viloud.tv/player/embed/channel/8e9b2b2234b5d86e62ac20c2eec5e6cf?autoplay=1&volume=1&controls=0&title=0&share=0&random=0";
     private static final int REQUEST_ACCESS = 101;
     private static String[] PERMISSIONS = {Manifest.permission.CALL_PHONE,
             Manifest.permission.CALL_PRIVILEGED};
@@ -102,13 +103,13 @@ public class MainFullActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mWebView.loadUrl("javascript:(function() { document.getElementsByTagName('video')[0].play(); })()");
+//        mWebView.loadUrl("javascript:(function() { document.getElementsByTagName('video')[0].play(); })()");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mWebView.loadUrl("javascript:(function() { document.getElementsByTagName('video')[0].stop(); })()");
+//        mWebView.loadUrl("javascript:(function() { document.getElementsByTagName('video')[0].stop(); })()");
     }
 
     private void email() {
@@ -190,7 +191,14 @@ public class MainFullActivity extends AppCompatActivity {
                         .show();
                 Crashlytics.log(description);
             }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                view.loadUrl(url); // you are using siteView here instead of view
+                return super.shouldOverrideUrlLoading(view, request);
+            }
         });
+        mWebView.invalidate();
         mWebView.setInitialScale(100);
         mWebView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -206,8 +214,7 @@ public class MainFullActivity extends AppCompatActivity {
                 return false;
             }
         });
-        mWebView.loadUrl("https://app.viloud.tv/player/embed/channel/8e9b2b2234b5d86e62ac20c2eec5e6cf?autoplay=1&volume=1&controls=0&title=0&share=0&random=0");
-//        mWebView.loadUrl("file:///android_asset/index.html");   // now it will not fail here
+//        mWebView.loadUrl(url);
     }
 
     @Override
@@ -310,6 +317,9 @@ public class MainFullActivity extends AppCompatActivity {
         mDecorView.setSystemUiVisibility(uiOptions);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        if (paramsNotFullscreen == null) {
+            paramsNotFullscreen = (LinearLayout.LayoutParams) mWebViewLayout.getLayoutParams();
+        }
         mWebViewLayout.setLayoutParams(paramsNotFullscreen);
 //        mMainLayout.setBackground(getResources().getDrawable(R.drawable.app_background));
         mTopToolbar.setVisibility(View.VISIBLE);
